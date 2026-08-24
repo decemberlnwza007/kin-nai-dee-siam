@@ -1,0 +1,328 @@
+/* Desktop website adaptation — mobile remains governed by style.css */
+:root {
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+}
+
+main:focus { outline: none; }
+
+.page { padding: var(--space-5) var(--space-5) var(--space-16); }
+.hero-copy h1 { margin-bottom: var(--space-2); }
+.search { margin: var(--space-6) 0 var(--space-4); }
+.categories { margin-bottom: var(--space-8); }
+.section-head { margin: var(--space-10) 0 var(--space-4); }
+.restaurant-row { gap: var(--space-4); padding: var(--space-4) 0; }
+.restaurant-info h3 { margin: var(--space-1) 0; }
+.row-stats { gap: var(--space-3); margin-top: var(--space-2); }
+.big-decision { gap: var(--space-4); padding: var(--space-6) 0; }
+.quick-facts { gap: var(--space-4); padding: var(--space-5) 0; }
+.ratings { padding: var(--space-8) 0; }
+.ratings h2,
+.reviews h2 { margin-bottom: var(--space-5); }
+.rating-row { margin: var(--space-3) 0; }
+.reviews { padding: var(--space-8) 0; }
+.review { padding: var(--space-5) 0; }
+.sticky-actions { gap: var(--space-2); padding: var(--space-3) 0; }
+.queue-ticket { margin: var(--space-6) 0 var(--space-8); }
+.progress-wrap { margin: var(--space-8) 0; }
+.walk-note { gap: var(--space-4); padding: var(--space-6) 0; }
+.queue-controls { gap: var(--space-3); margin-top: var(--space-6); }
+
+.map-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.map-action svg {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.detail-page .sticky-actions:has(.map-action) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.detail-page .sticky-actions .map-action { grid-column: 1 / -1; }
+
+@media (min-width: 900px) {
+  html { background: var(--paper); }
+
+  body {
+    padding: 0;
+    min-width: 900px;
+    background: var(--paper);
+  }
+
+  .app-shell {
+    width: 100%;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0 0 80px;
+    border-radius: 0;
+    box-shadow: none;
+    overflow: visible;
+    background: var(--paper);
+  }
+
+  .topbar {
+    height: 78px;
+    padding: 0 max(32px, calc((100vw - 1200px) / 2));
+    border-bottom: 1px solid var(--line);
+    background: var(--surface);
+  }
+
+  .topbar.scrolled { border-color: var(--line); }
+
+  .brand {
+    font-size: 23px;
+    position: relative;
+    z-index: 30;
+  }
+
+  .back-button {
+    position: absolute;
+    left: max(18px, calc((100vw - 1300px) / 2));
+  }
+
+  .topbar:has(.back-button:not([hidden])) .brand {
+    margin-left: 42px;
+  }
+
+  .queue-shortcut { display: none !important; }
+
+  main {
+    width: min(100% - 64px, 1200px);
+    min-height: calc(100vh - 78px);
+    margin: 0 auto;
+  }
+
+  .page { padding: var(--space-12) 0 96px; }
+
+  .bottom-nav {
+    position: fixed;
+    inset: 0 max(32px, calc((100vw - 1200px) / 2)) auto auto;
+    transform: none;
+    width: 460px;
+    height: 78px;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+  }
+
+  .nav-item {
+    min-width: 130px;
+    flex-direction: row;
+    gap: 8px;
+    font-size: 14px;
+    cursor: pointer;
+  }
+
+  .nav-item::after {
+    content: "";
+    position: absolute;
+    right: 22px;
+    bottom: 0;
+    left: 22px;
+    height: 3px;
+    background: transparent;
+  }
+
+  .nav-item.active::after { background: var(--red); }
+  .nav-item i { top: 19px; right: 20px; }
+
+  .hero-copy {
+    display: grid;
+    grid-template-columns: minmax(420px, 1.25fr) minmax(320px, .75fr);
+    align-items: end;
+    gap: 64px;
+  }
+
+  .hero-copy h1 {
+    max-width: 720px;
+    font-size: clamp(48px, 5vw, 72px);
+    line-height: 1.02;
+    letter-spacing: -.035em;
+  }
+
+  .hero-copy p {
+    max-width: 390px;
+    padding-bottom: 8px;
+    font-size: 18px;
+    line-height: 1.6;
+  }
+
+  .search {
+    width: min(100%, 680px);
+    margin: var(--space-10) 0 var(--space-4);
+  }
+
+  .search input { height: 56px; font-size: 17px; }
+  .search svg { top: 18px; }
+
+  .categories {
+    margin: 0;
+    padding: 0;
+    overflow: visible;
+  }
+
+  .chip { min-height: 42px; padding-inline: 18px; }
+
+  .home-page > .section-head:first-of-type { margin-top: 56px; }
+
+  .section-head { margin: var(--space-16) 0 var(--space-5); }
+  .section-head h2 { font-size: 28px; }
+
+  .lead-restaurant {
+    min-height: 440px;
+    border-radius: 16px;
+  }
+
+  .lead-content { padding: 34px; }
+  .lead-content h3 { font-size: 42px; }
+  .lead-content .wait-callout { font-size: 18px; }
+  .lead-meta { gap: 20px; font-size: 17px; }
+
+  .restaurant-list {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-3) var(--space-8);
+  }
+
+  .restaurant-row {
+    grid-template-columns: 118px minmax(0, 1fr) auto;
+    min-width: 0;
+    padding: var(--space-5) 0 var(--space-6);
+  }
+
+  .restaurant-row img { width: 118px; height: 106px; }
+  .restaurant-info h3 { font-size: 18px; }
+  .row-stats { flex-wrap: wrap; }
+
+  .compare-toggle { transition: transform .2s ease, background-color .2s ease; }
+
+  .detail-page {
+    display: grid;
+    grid-template-columns: minmax(0, 1.08fr) minmax(380px, .92fr);
+    grid-template-rows: auto auto auto auto auto;
+    gap: 0 56px;
+    align-items: start;
+  }
+
+  .detail-hero {
+    grid-column: 1;
+    grid-row: 1 / span 5;
+    position: sticky;
+    top: 106px;
+    height: min(68vh, 660px);
+    min-height: 540px;
+    margin: 0;
+    border-radius: 16px;
+    overflow: hidden;
+  }
+
+  .detail-title { right: 32px; bottom: 28px; left: 32px; }
+  .detail-title h1 { font-size: 44px; }
+  .big-decision, .quick-facts, .ratings, .reviews, .sticky-actions { grid-column: 2; }
+  .big-decision { padding-top: 0; }
+  .queue-time strong { font-size: 52px; }
+  .ratings { padding-top: 30px; }
+  .review p { font-size: 15px; }
+
+  .sticky-actions {
+    position: sticky;
+    bottom: 20px;
+    padding: 14px;
+    border-radius: 14px;
+    background: var(--surface);
+    box-shadow: 0 14px 34px rgba(49,38,24,.12);
+  }
+
+  .detail-page .sticky-actions:has(.map-action) { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .detail-page .sticky-actions .map-action { grid-column: auto; }
+
+  .compare-page h1,
+  .queue-page h1,
+  .alternatives-page h1 { font-size: 46px; }
+
+  .subtext { max-width: 680px; font-size: 17px; }
+
+  .compare-grid {
+    grid-template-columns: 150px repeat(var(--cols), minmax(220px, 1fr));
+    margin: 20px 0 30px;
+    padding: 0;
+    overflow: visible;
+  }
+
+  .compare-grid > * { padding: 18px 20px; }
+  .compare-head { min-height: 210px; }
+  .compare-head img { width: 100%; height: 120px; }
+  .compare-head strong { font-size: 17px; }
+
+  .alternatives-intro {
+    margin: 0 0 34px;
+    padding: 34px 38px;
+    border-radius: 16px;
+  }
+
+  .alternatives-intro strong { font-size: 34px; }
+
+  .queue-page {
+    display: grid;
+    grid-template-columns: minmax(0, .9fr) minmax(420px, 1.1fr);
+    gap: 0 70px;
+    align-items: start;
+  }
+
+  .queue-page > h1,
+  .queue-page > .subtext,
+  .queue-page > .queue-ticket { grid-column: 1; }
+
+  .queue-page > .progress-wrap {
+    grid-column: 2;
+    grid-row: 1;
+    margin-top: 18px;
+  }
+
+  .queue-page > .walk-note,
+  .queue-page > .queue-controls {
+    grid-column: 2;
+  }
+
+  .queue-page > .walk-note { margin-top: var(--space-16); }
+  .queue-ticket { margin-top: 28px; padding: 30px; }
+  .queue-number { font-size: 78px; }
+
+  .notification { align-items: center; }
+  .notification-card { padding: 32px; }
+}
+
+@media (min-width: 900px) and (hover: hover) {
+  .restaurant-row:hover h3 { color: var(--red); }
+  .restaurant-row:hover img { filter: saturate(1.08); }
+  .lead-restaurant:hover img { transform: scale(1.015); }
+  .lead-restaurant img { transition: transform .5s cubic-bezier(.22,1,.36,1); }
+  .nav-item:hover { color: var(--ink); }
+  .compare-toggle:hover { transform: scale(1.08); }
+}
+
+@media (min-width: 900px) and (max-width: 1100px) {
+  main { width: calc(100% - 48px); }
+  .bottom-nav { right: 22px; width: 420px; }
+  .restaurant-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .detail-page { gap: 0 36px; }
+}
