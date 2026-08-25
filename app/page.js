@@ -140,6 +140,33 @@ const waitLabel = (n) =>
 const mapUrl = (r) =>
   `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(`${r.name} Siam Square Bangkok`)}`;
 
+const priorityLabels = {
+  balanced: "พอดีทุกด้าน",
+  fast: "กินให้ไว",
+  value: "คุ้มงบที่สุด",
+  taste: "เน้นรสชาติ",
+};
+
+function getMealMatch(restaurant, preference) {
+  const waitFit = Math.max(0, 100 - Math.max(0, restaurant.wait - preference.time) * 5);
+  const budgetFit = Math.max(0, 100 - Math.max(0, restaurant.price - preference.budget) * 0.45);
+  const tasteFit = restaurant.rating * 20;
+  const valueFit = restaurant.worth;
+  const weights = {
+    balanced: [0.32, 0.25, 0.2, 0.23],
+    fast: [0.58, 0.16, 0.12, 0.14],
+    value: [0.22, 0.5, 0.1, 0.18],
+    taste: [0.18, 0.12, 0.55, 0.15],
+  }[preference.priority];
+  const score = Math.round(waitFit * weights[0] + budgetFit * weights[1] + tasteFit * weights[2] + valueFit * weights[3]);
+  let reason = `สมดุลกับเวลาและงบของคุณ`;
+  if (restaurant.wait <= preference.time && restaurant.price <= preference.budget)
+    reason = `ทันเวลาและไม่เกินงบ`;
+  else if (restaurant.wait <= preference.time) reason = `ได้กินทันเวลาที่ตั้งไว้`;
+  else if (restaurant.price <= preference.budget) reason = `ราคาอยู่ในงบที่ตั้งไว้`;
+  return { score: Math.max(0, Math.min(99, score)), reason };
+}
+
 function Icon({ name }) {
   const paths = {
     back: <path d="m15 18-6-6 6-6" />,
@@ -181,7 +208,7 @@ function MapLink({ restaurant, label = "เปิดแผนที่" }) {
   );
 }
 
-function RestaurantRow({ restaurant: r, compare, onOpen, onCompare }) {
+function RestaurantRow({ restaurant: r, compare, onOpen, onCompare, match }) {
   const selected = compare.includes(r.id);
   return (
     <article
@@ -203,6 +230,11 @@ function RestaurantRow({ restaurant: r, compare, onOpen, onCompare }) {
           <span>★ {r.rating}</span>
           <span>฿{r.price}</span>
         </div>
+        {match && (
+          <p className="mt-2 text-xs font-semibold text-leaf">
+            ตรงใจ {match.score}% · {match.reason}
+          </p>
+        )}
       </div>
       <button
         className={`h-8 w-8 self-start rounded-full border font-bold transition-transform hover:scale-105 ${selected ? "border-ink bg-ink text-white" : "border-line bg-surface"}`}
@@ -228,6 +260,7 @@ export default function Page() {
   const [queue, setQueue] = useState(null);
   const [notice, setNotice] = useState(false);
   const [toast, setToast] = useState("");
+  const [preference, setPreference] = useState({ time: 25, budget: 350, priority: "balanced" });
   const timer = useRef(null);
 
   const current = restaurants.find((r) => r.id === selected) || restaurants[0];
@@ -310,6 +343,8 @@ export default function Page() {
         setSearch={setSearch}
         category={category}
         setCategory={setCategory}
+        preference={preference}
+        setPreference={setPreference}
         {...common}
       />
     );
@@ -332,6 +367,8 @@ export default function Page() {
         onAdvance={() => advanceQueue(2)}
         onCancel={cancelQueue}
         onHome={() => navigate("home")}
+        preference={preference}
+        onSwitch={(id) => navigate("detail", id)}
       />
     );
 
@@ -420,19 +457,28 @@ function Home({
   compare,
   onOpen,
   onCompare,
+  preference,
+  setPreference,
 }) {
-  const filtered = restaurants.filter(
-    (r) =>
-      (category === "ทั้งหมด" || r.category === category) &&
-      `${r.name} ${r.type}`.toLowerCase().includes(search.toLowerCase()),
-  );
+  const filtered = restaurants
+    .filter(
+      (r) =>
+        (category === "ทั้งหมด" || r.category === category) &&
+        `${r.name} ${r.type}`.toLowerCase().includes(search.toLowerCase()),
+    )
+    .sort(
+      (a, b) =>
+        getMealMatch(b, preference).score - getMealMatch(a, preference).score,
+    );
   const lead = filtered[0];
+  const leadMatch = lead ? getMealMatch(lead, preference) : null;
   return (
     <section className="px-5 pb-16 pt-5 min-[900px]:px-0 min-[900px]:pb-24 min-[900px]:pt-12">
       <div className="min-[900px]:grid min-[900px]:grid-cols-[minmax(420px,1.25fr)_minmax(320px,.75fr)] min-[900px]:items-end min-[900px]:gap-16">
         <h1 className="mb-2 max-w-[13ch] text-[32px] font-bold leading-[1.15] tracking-[-.025em] min-[900px]:max-w-[720px] min-[900px]:text-[clamp(48px,5vw,72px)] min-[900px]:leading-[1.02] min-[900px]:tracking-[-.035em]">มื้อนี้ คุ้มที่จะรอไหม?</h1>
         <p className="text-[15px] text-muted min-[900px]:max-w-[390px] min-[900px]:pb-2 min-[900px]:text-lg min-[900px]:leading-relaxed">เช็กคิวจริงเทียบความคุ้ม ก่อนเดินเข้าร้าน</p>
       </div>
+      <DecisionLens preference={preference} setPreference={setPreference} />
       <label className="relative my-6 block min-[900px]:mb-4 min-[900px]:mt-10 min-[900px]:w-full min-[900px]:max-w-[680px]">
         <span className="absolute left-4 top-[15px] text-muted min-[900px]:top-[18px] [&_svg]:h-5 [&_svg]:w-5 [&_svg]:fill-none [&_svg]:stroke-current [&_svg]:stroke-2"><FontAwesomeIcon icon={faMagnifyingGlass} /></span>
         <input
@@ -484,6 +530,9 @@ function Home({
                 <span>★ {lead.rating}</span>
                 <span className="font-bold text-[#bfe8d3]">คุ้ม {lead.worth}%</span>
               </div>
+              <p className="mt-3 max-w-[52ch] text-sm font-semibold text-white">
+                ตรงใจคุณ {leadMatch.score}% · {leadMatch.reason}
+              </p>
             </div>
           </article>
           <div className="mb-4 mt-10 flex items-end justify-between min-[900px]:mb-5 min-[900px]:mt-16">
@@ -502,6 +551,7 @@ function Home({
                 compare={compare}
                 onOpen={onOpen}
                 onCompare={onCompare}
+                match={getMealMatch(r, preference)}
               />
             ))}
           </div>
@@ -511,6 +561,106 @@ function Home({
           <strong className="mb-1 block text-xl text-ink">ยังไม่เจอร้านนี้</strong>ลองค้นหาชื่อเมนู หรือเลือกหมวดอื่น
         </div>
       )}
+    </section>
+  );
+}
+
+function DecisionLens({ preference, setPreference }) {
+  const update = (key, value) =>
+    setPreference((current) => ({ ...current, [key]: value }));
+  const timeOptions = [
+    { value: 15, label: "15 นาที", hint: "รีบมาก" },
+    { value: 25, label: "25 นาที", hint: "พอดี" },
+    { value: 40, label: "40 นาที", hint: "รอได้" },
+    { value: 60, label: "1 ชั่วโมง", hint: "ไม่รีบ" },
+  ];
+  const budgetOptions = [
+    { value: 200, label: "ไม่เกิน ฿200", hint: "ประหยัด" },
+    { value: 350, label: "ไม่เกิน ฿350", hint: "มื้อทั่วไป" },
+    { value: 500, label: "ไม่เกิน ฿500", hint: "จัดเต็ม" },
+    { value: 600, label: "฿600 ขึ้นไป", hint: "เปิดกว้าง" },
+  ];
+
+  return (
+    <section className="mt-8 border-y border-ink py-5 min-[900px]:mt-10 min-[900px]:grid min-[900px]:grid-cols-[1.05fr_.95fr] min-[900px]:gap-12 min-[900px]:py-7" aria-labelledby="decision-lens-title">
+      <div>
+        <h2 id="decision-lens-title" className="text-xl font-bold min-[900px]:text-[28px]">
+          ตั้งเข็มทิศมื้อนี้
+        </h2>
+        <p className="mt-1 max-w-[55ch] text-sm text-muted">
+          บอกข้อจำกัดของคุณ แล้วอันดับร้านด้านล่างจะเปลี่ยนพร้อมเหตุผล ไม่ต้องเดาจากคะแนนรวมอย่างเดียว
+        </p>
+        <div className="mt-4 flex flex-wrap gap-2" aria-label="สิ่งสำคัญที่สุด">
+          {Object.entries(priorityLabels).map(([value, label]) => (
+            <button
+              key={value}
+              className={`rounded-full border px-3 py-2 text-sm font-semibold transition-colors ${preference.priority === value ? "border-ink bg-ink text-white" : "border-line bg-surface hover:border-ink"}`}
+              onClick={() => update("priority", value)}
+              aria-pressed={preference.priority === value}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
+      </div>
+      <div className="mt-6 grid gap-6 min-[900px]:mt-0">
+        <fieldset>
+          <legend className="mb-2 text-sm font-bold">เวลาที่มีรวมเวลารอ</legend>
+          <div className="grid grid-cols-2 gap-2">
+            {timeOptions.map((option) => {
+              const selected = preference.time === option.value;
+              return (
+                <label
+                  key={option.value}
+                  className={`relative min-h-[62px] cursor-pointer rounded-xl border px-3 py-2.5 transition-colors has-[:focus-visible]:outline-3 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-chilli/30 ${selected ? "border-chilli bg-chilli text-white" : "border-line bg-surface hover:border-chilli"}`}
+                >
+                  <input
+                    className="sr-only"
+                    type="radio"
+                    name="meal-time"
+                    value={option.value}
+                    checked={selected}
+                    onChange={() => update("time", option.value)}
+                  />
+                  <span className="block font-bold">{option.label}</span>
+                  <span className={`text-xs ${selected ? "text-white/80" : "text-muted"}`}>{option.hint}</span>
+                  <span className={`absolute right-3 top-3 grid h-4 w-4 place-items-center rounded-full border ${selected ? "border-white" : "border-line"}`} aria-hidden="true">
+                    {selected && <span className="h-2 w-2 rounded-full bg-white" />}
+                  </span>
+                </label>
+              );
+            })}
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend className="mb-2 text-sm font-bold">งบต่อคน</legend>
+          <div className="grid grid-cols-2 gap-2">
+            {budgetOptions.map((option) => {
+              const selected = preference.budget === option.value;
+              return (
+                <label
+                  key={option.value}
+                  className={`relative min-h-[62px] cursor-pointer rounded-xl border px-3 py-2.5 transition-colors has-[:focus-visible]:outline-3 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-leaf/30 ${selected ? "border-leaf bg-leaf text-white" : "border-line bg-surface hover:border-leaf"}`}
+                >
+                  <input
+                    className="sr-only"
+                    type="radio"
+                    name="meal-budget"
+                    value={option.value}
+                    checked={selected}
+                    onChange={() => update("budget", option.value)}
+                  />
+                  <span className="block font-bold">{option.label}</span>
+                  <span className={`text-xs ${selected ? "text-white/80" : "text-muted"}`}>{option.hint}</span>
+                  <span className={`absolute right-3 top-3 grid h-4 w-4 place-items-center rounded-full border ${selected ? "border-white" : "border-line"}`} aria-hidden="true">
+                    {selected && <span className="h-2 w-2 rounded-full bg-white" />}
+                  </span>
+                </label>
+              );
+            })}
+          </div>
+        </fieldset>
+      </div>
     </section>
   );
 }
@@ -686,7 +836,7 @@ function Alternatives({ restaurant, compare, onOpen, onCompare }) {
   );
 }
 
-function Queue({ queue, onAdvance, onCancel, onHome }) {
+function Queue({ queue, onAdvance, onCancel, onHome, preference, onSwitch }) {
   if (!queue)
     return (
       <section className="px-5 pb-16 pt-5 min-[900px]:px-0 min-[900px]:pb-24 min-[900px]:pt-12">
@@ -702,6 +852,15 @@ function Queue({ queue, onAdvance, onCancel, onHome }) {
     );
   const r = restaurants.find((x) => x.id === queue.restaurantId),
     progress = Math.max(8, 100 - (queue.ahead / queue.initial) * 100);
+  const escape = restaurants
+    .filter(
+      (item) =>
+        item.id !== r.id &&
+        item.wait < queue.wait &&
+        item.price <= preference.budget + 100,
+    )
+    .sort((a, b) => a.wait - b.wait)[0];
+  const minutesSaved = escape ? queue.wait - escape.wait : 0;
   return (
     <section className="px-5 pb-16 pt-5 min-[900px]:grid min-[900px]:grid-cols-[minmax(0,.9fr)_minmax(420px,1.1fr)] min-[900px]:items-start min-[900px]:gap-x-[70px] min-[900px]:px-0 min-[900px]:pb-24 min-[900px]:pt-12">
       <h1 className="mb-2 text-[30px] font-bold leading-tight min-[900px]:col-start-1 min-[900px]:text-[46px]">คิวกำลังขยับ</h1>
@@ -734,6 +893,29 @@ function Queue({ queue, onAdvance, onCancel, onHome }) {
           <i className="block h-full bg-chilli" style={{ width: `${progress}%` }} />
         </div>
       </div>
+      {escape && minutesSaved >= 6 && (
+        <aside className="border-y border-ink py-5 min-[900px]:col-start-2" aria-labelledby="queue-escape-title">
+          <div className="flex items-start justify-between gap-5">
+            <div>
+              <h2 id="queue-escape-title" className="text-lg font-bold">
+                ทางหนีคิว: ประหยัดได้ {minutesSaved} นาที
+              </h2>
+              <p className="mt-1 text-sm text-muted">
+                {escape.name} รอประมาณ {escape.wait} นาที · ฿{escape.price} ต่อคน และยังใกล้เงื่อนไขมื้อนี้ของคุณ
+              </p>
+            </div>
+            <span className="shrink-0 rounded-full bg-leaf-soft px-3 py-1 text-xs font-bold text-leaf">
+              ตรงใจ {getMealMatch(escape, preference).score}%
+            </span>
+          </div>
+          <button
+            className="mt-4 min-h-11 rounded-xl bg-ink px-4 py-2 font-bold text-white transition-colors hover:bg-chilli-dark"
+            onClick={() => onSwitch(escape.id)}
+          >
+            ดู {escape.name} ก่อนตัดสินใจ
+          </button>
+        </aside>
+      )}
       <div className="flex gap-4 border-y border-line py-6 min-[900px]:col-start-2 min-[900px]:mt-16 [&>svg]:h-7 [&>svg]:w-7 [&>svg]:shrink-0 [&>svg]:fill-none [&>svg]:stroke-leaf [&>svg]:stroke-[1.7]">
         <Icon name="map" />
         <div>

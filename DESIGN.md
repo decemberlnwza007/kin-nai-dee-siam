@@ -31,6 +31,8 @@ Waiting states always combine words and numbers. Color supports meaning but neve
 - At three groups remaining, a blocking bottom sheet provides a clear return-to-restaurant action.
 - Google Maps directions are available from restaurant detail, the active queue, and the three-groups-left notification. They open in a separate tab and use the restaurant name plus Siam Square as the destination query.
 - Persistent bottom navigation keeps discovery, comparison, and queue state within one tap.
+- The meal compass sits before discovery results; changing a constraint immediately reorders results and exposes a concise match reason.
+- Queue escape appears inline in the active queue only when an alternative saves at least six estimated minutes.
 
 ## Responsive Behavior
 

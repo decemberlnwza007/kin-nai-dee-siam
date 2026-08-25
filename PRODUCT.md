@@ -30,6 +30,8 @@ Mobile use around Siam Square; users scan waiting time, value, taste, distance, 
 
 - Thai-language consumer interface.
 - Search, category filtering, restaurant details, 2–3-way comparison, alternatives, virtual queue, and simulated notification.
+- A personal “meal compass” re-ranks restaurants from the user's available time, per-person budget, and priority, then explains each match.
+- During a simulated wait, “queue escape” monitors nearby options and surfaces a faster alternative when the time saving is meaningful.
 - Google Maps directions from restaurant detail, active queue, and queue notification states.
 - Mock data only; no backend.
 - All restaurant, queue, rating, and pricing values are illustrative prototype data.

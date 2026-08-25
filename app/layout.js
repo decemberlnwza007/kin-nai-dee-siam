@@ -1,5 +1,4 @@
 import '../output.css';
-import './../output.css'
 import { siteConfig } from './site';
 
 import { config } from '@fortawesome/fontawesome-svg-core';
