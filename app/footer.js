@@ -25,7 +25,7 @@ export default function Footer({ onNavigate, hasQueue }) {
       name: "Mr.Natthawat",
       lastname: "Rodchanathanatham",
       studentId: "69130500020",
-      photo: "/assets/tam.jpg",
+      photo: "/assets/tam.JPG",
     },
     {
       name: "ชื่อสมาชิกคนที่ 2",
@@ -41,7 +41,7 @@ export default function Footer({ onNavigate, hasQueue }) {
       name: "Mr.Phongsakorn",
       lastname: "Thongrak",
       studentId: "69130500037",
-      photo: "/assets/thanwa.jpg",
+      photo: "/assets/thanwa.JPG",
     },
     {
       name: "ชื่อสมาชิกคนที่ 5",
