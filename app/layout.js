@@ -2,6 +2,10 @@ import '../output.css';
 import './../output.css'
 import { siteConfig } from './site';
 
+import { config } from '@fortawesome/fontawesome-svg-core';
+import '@fortawesome/fontawesome-svg-core/styles.css';
+config.autoAddCss = false;
+
 export const metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {

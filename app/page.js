@@ -1,5 +1,7 @@
 "use client";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMagnifyingGlass, faCheck } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useRef, useState } from "react";
 
 const restaurants = [
@@ -15,7 +17,7 @@ const restaurants = [
     worth: 87,
     distance: 280,
     popular: true,
-    img: "/assets/noodles.jpg",
+    img: "/assets/teenoi_mbk.jpg",
     ratings: {
       รสชาติ: 4.7,
       ราคา: 4.8,
@@ -36,7 +38,7 @@ const restaurants = [
     worth: 91,
     distance: 190,
     popular: true,
-    img: "/assets/thai-curry.jpg",
+    img: "/assets/kubkao_kubpla.jpeg",
     ratings: {
       รสชาติ: 4.8,
       ราคา: 4.1,
@@ -210,7 +212,7 @@ function RestaurantRow({ restaurant: r, compare, onOpen, onCompare }) {
           onCompare(r.id);
         }}
       >
-        {selected ? "✓" : "+"}
+        {selected ? <FontAwesomeIcon icon={faCheck} /> : "+"}
       </button>
     </article>
   );
@@ -371,7 +373,7 @@ export default function Page() {
         />
         <Nav
           active={route === "compare"}
-          icon="compare"
+          icon={"compare"}
           label="เปรียบเทียบ"
           count={compare.length}
           onClick={() => navigate("compare")}
@@ -432,7 +434,7 @@ function Home({
         <p className="text-[15px] text-muted min-[900px]:max-w-[390px] min-[900px]:pb-2 min-[900px]:text-lg min-[900px]:leading-relaxed">เช็กคิวจริงเทียบความคุ้ม ก่อนเดินเข้าร้าน</p>
       </div>
       <label className="relative my-6 block min-[900px]:mb-4 min-[900px]:mt-10 min-[900px]:w-full min-[900px]:max-w-[680px]">
-        <span className="absolute left-4 top-[15px] text-muted min-[900px]:top-[18px] [&_svg]:h-5 [&_svg]:w-5 [&_svg]:fill-none [&_svg]:stroke-current [&_svg]:stroke-2"><Icon name="search" /></span>
+        <span className="absolute left-4 top-[15px] text-muted min-[900px]:top-[18px] [&_svg]:h-5 [&_svg]:w-5 [&_svg]:fill-none [&_svg]:stroke-current [&_svg]:stroke-2"><FontAwesomeIcon icon={faMagnifyingGlass} /></span>
         <input
           className="h-[50px] w-full rounded-xl border border-line bg-surface px-[46px] text-ink placeholder:text-[#777269] min-[900px]:h-14 min-[900px]:text-[17px]"
           type="search"
@@ -475,7 +477,7 @@ function Home({
           >
             <img className="absolute inset-0 h-full w-full object-cover opacity-70" src={lead.img} alt={`อาหารจาก ${lead.name}`} />
             <div className="relative z-10 w-full bg-gradient-to-t from-black/80 to-transparent p-5 pt-24 min-[900px]:p-[34px] min-[900px]:pt-32">
-              <span className="mb-2.5 inline-flex rounded-lg bg-white px-2.5 py-2 font-bold text-ink min-[900px]:text-lg">{waitLabel(lead.wait)}</span>
+              <span className="mb-5 inline-flex rounded-lg bg-white px-2.5 py-2 font-bold text-ink min-[900px]:text-lg">{waitLabel(lead.wait)}</span>
               <h3 className="text-[27px] font-bold leading-[1.15] min-[900px]:text-[42px]">{lead.name}</h3>
               <div className="mt-2 flex flex-wrap items-center gap-3 text-[#f3efe7] min-[900px]:gap-5 min-[900px]:text-[17px]">
                 <span>{lead.type}</span>
