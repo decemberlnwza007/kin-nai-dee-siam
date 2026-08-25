@@ -28,14 +28,16 @@ export default function Footer({ onNavigate, hasQueue }) {
       photo: "/assets/tam.JPG",
     },
     {
-      name: "ชื่อสมาชิกคนที่ 2",
-      studentId: "รหัสนักศึกษา",
-      photo: "/assets/member-placeholder.svg",
+      name: "Mr.Phattharaphon",
+      lastname: "Chomput",
+      studentId: "69130500044",
+      photo: "/assets/noon.jpg",
     },
     {
-      name: "ชื่อสมาชิกคนที่ 3",
-      studentId: "รหัสนักศึกษา",
-      photo: "/assets/member-placeholder.svg",
+      name: "Wannakorn ",
+      lastname: "Chongsanguan",
+      studentId: "69130500053",
+      photo: "/assets/nammon.jpg",
     },
     {
       name: "Mr.Phongsakorn",
@@ -44,14 +46,16 @@ export default function Footer({ onNavigate, hasQueue }) {
       photo: "/assets/thanwa.JPG",
     },
     {
-      name: "ชื่อสมาชิกคนที่ 5",
-      studentId: "รหัสนักศึกษา",
-      photo: "/assets/member-placeholder.svg",
+      name: "Ratthakit",
+      lastname: "Wiangsanthia",
+      studentId: "69130500048",
+      photo: "/assets/sense.jpg",
     },
     {
-      name: "ชื่อสมาชิกคนที่ 6 ",
-      studentId: "รหัสนักศึกษา",
-      photo: "/assets/member-placeholder.svg",
+      name: "Mr.Phakhapon",
+      lastname: "Waeowab",
+      studentId: "69130500041",
+      photo: "/assets/it.jpg",
     },
   ];
 
@@ -273,7 +277,7 @@ export default function Footer({ onNavigate, hasQueue }) {
                         MEMBER {String(index + 1).padStart(2, "0")}
                       </p>
                       <p className="font-semibold leading-snug">
-                        {member.name} {member.lastname}
+                        {member.name} <br /> {member.lastname}
                       </p>
 
                       <p className="mt-1 text-xs text-[#858077]">
