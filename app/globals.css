@@ -1,5 +1,38 @@
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap');
-@import '../style.css';
-@import '../website.css';
+@import url('https://fonts.googleapis.com/css2?family=Bai+Jamjuree:wght@400;500;600;700&display=swap');
+@import 'tailwindcss';
 
-a { color: inherit; }
+@theme {
+  --color-paper: #f7f3eb;
+  --color-surface: #fffdf8;
+  --color-ink: #171714;
+  --color-muted: #6d6a62;
+  --color-line: #ded8cb;
+  --color-chilli: #d8442f;
+  --color-chilli-dark: #a82b1d;
+  --color-leaf: #23745a;
+  --color-leaf-soft: #dcebe3;
+  --color-amber-soft: #f3e7c9;
+  --font-sans: 'Bai Jamjuree', 'Noto Sans Thai', sans-serif;
+  --font-display: 'Bai Jamjuree', 'Noto Sans Thai', sans-serif;
+}
+
+@layer base {
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; background: #e9e4da; }
+  body {
+    margin: 0;
+    background: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 16px;
+    line-height: 1.45;
+    -webkit-font-smoothing: antialiased;
+  }
+  button, input { font: inherit; }
+  button { color: inherit; }
+  button:focus-visible, input:focus-visible, [tabindex]:focus-visible {
+    outline: 3px solid rgb(216 68 47 / .28);
+    outline-offset: 3px;
+  }
+  ::selection { background: #f0b9ae; color: #56160d; }
+}

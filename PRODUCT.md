@@ -8,7 +8,7 @@ web
 
 ## Stack
 
-Next.js App Router with React client components and global CSS.
+Next.js App Router with React client components and Tailwind CSS v4 utilities.
 
 ## Users
 

@@ -8,7 +8,7 @@
 
 - Warm paper ground (`#f7f3eb`) and near-white food surfaces (`#fffdf8`).
 - Ink (`#171714`) for hierarchy, chilli red (`#d8442f`) for actions and time pressure, and leaf green (`#23745a`) for positive value judgments.
-- IBM Plex Sans Thai carries interface and reading text; Manrope is reserved for large queue numerals.
+- Bai Jamjuree carries interface, headings, and queue numerals for one consistent Thai typographic voice.
 - Dividers structure lists. Cards are reserved for images, tickets, and interruptions that genuinely need a boundary.
 - Corners use 12–16px radii; pills are limited to compact filters and live-queue status.
 - Spacing follows a 4px base scale: 4, 8, 12, 16, 20, 24, 32, 40, 48, and 64px. Related facts stay tight; sections and task changes receive the larger intervals.

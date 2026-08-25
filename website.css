@@ -1,4 +1,5 @@
 /* Desktop website adaptation — mobile remains governed by style.css */
+@import "tailwindcss";
 :root {
   --space-1: 4px;
   --space-2: 8px;
