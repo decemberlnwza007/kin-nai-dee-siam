@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 320" role="img" aria-labelledby="title desc">
+  <title id="title">พื้นที่สำหรับรูปสมาชิก</title>
+  <desc id="desc">ภาพตัวอย่างสำหรับแทนที่ด้วยรูปถ่ายสมาชิกจริง</desc>
+  <rect width="320" height="320" rx="32" fill="#e3ddd2"/>
+  <rect x="50" y="68" width="220" height="184" rx="24" fill="#fffdf8" stroke="#171714" stroke-width="4"/>
+  <circle cx="211" cy="120" r="22" fill="#d8442f"/>
+  <path d="m72 224 55-58 41 41 28-29 52 46" fill="none" stroke="#171714" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M124 52h72" stroke="#171714" stroke-width="8" stroke-linecap="round"/>
+</svg>

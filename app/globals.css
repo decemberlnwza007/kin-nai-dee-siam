@@ -36,3 +36,40 @@
   }
   ::selection { background: #f0b9ae; color: #56160d; }
 }
+
+@keyframes member-backdrop-in {
+  from { opacity: 0; }
+}
+
+@keyframes member-modal-in {
+  from {
+    opacity: 0;
+    transform: translateY(28px) scale(.97);
+    clip-path: inset(12% 5% 0 5% round 16px);
+  }
+}
+
+@keyframes member-card-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+}
+
+@keyframes member-detail-in {
+  from {
+    opacity: 0;
+    transform: translateY(22px) scale(.975);
+    clip-path: inset(8% 4% 0 4% round 16px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [class*="member-modal-in"],
+  [class*="member-card-in"],
+  [class*="member-detail-in"],
+  [class*="member-backdrop-in"] {
+    animation-duration: .01ms !important;
+    animation-delay: 0ms !important;
+  }
+}

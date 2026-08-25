@@ -3,6 +3,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass, faCheck } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useRef, useState } from "react";
+import Footer from "./footer";
 
 const restaurants = [
   {
@@ -399,6 +400,13 @@ export default function Page() {
         )}
       </header>
       <main className="min-h-[calc(100dvh-152px)] focus:outline-none min-[900px]:mx-auto min-[900px]:min-h-[calc(100vh-78px)] min-[900px]:w-[min(calc(100%-64px),1200px)]" tabIndex="-1">{content}</main>
+      <Footer
+        hasQueue={Boolean(queue)}
+        onNavigate={(next) => {
+          if (next === "queue" && !queue) navigate("home");
+          else navigate(next);
+        }}
+      />
       <nav className="fixed bottom-0 left-1/2 z-30 grid h-[72px] w-full max-w-[480px] -translate-x-1/2 grid-cols-3 border-t border-line bg-surface pb-[env(safe-area-inset-bottom)] min-[760px]:bottom-6 min-[760px]:rounded-b-2xl min-[900px]:top-0 min-[900px]:right-[max(32px,calc((100vw-1200px)/2))] min-[900px]:bottom-auto min-[900px]:left-auto min-[900px]:h-[78px] min-[900px]:w-[460px] min-[900px]:translate-x-0 min-[900px]:border-0 min-[900px]:bg-transparent min-[900px]:pb-0" aria-label="เมนูหลัก">
         <Nav
           active={
