@@ -22,9 +22,10 @@ export default function Footer({ onNavigate, hasQueue }) {
 
   const members = [
     {
-      name: "ชื่อสมาชิกคนที่ 1",
-      studentId: "รหัสนักศึกษา 69130500020",
-      photo: "/assets/member-placeholder.svg",
+      name: "Mr.Natthawat",
+      lastname: "Rodchanathanatham",
+      studentId: "69130500020",
+      photo: "/assets/tam.jpg",
     },
     {
       name: "ชื่อสมาชิกคนที่ 2",
@@ -37,10 +38,10 @@ export default function Footer({ onNavigate, hasQueue }) {
       photo: "/assets/member-placeholder.svg",
     },
     {
-      name: "นายพงศกร",
-      lastname: "ทองรักษ์",
-      studentId: "รหัสนักศึกษา 69130500037",
-      photo: "/assets/member/thanwa.jpg",
+      name: "Mr.Phongsakorn",
+      lastname: "Thongrak",
+      studentId: "69130500037",
+      photo: "/assets/thanwa.jpg",
     },
     {
       name: "ชื่อสมาชิกคนที่ 5",
@@ -272,7 +273,7 @@ export default function Footer({ onNavigate, hasQueue }) {
                         MEMBER {String(index + 1).padStart(2, "0")}
                       </p>
                       <p className="font-semibold leading-snug">
-                        {member.name}
+                        {member.name} {member.lastname}
                       </p>
 
                       <p className="mt-1 text-xs text-[#858077]">
