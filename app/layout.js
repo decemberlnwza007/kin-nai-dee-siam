@@ -7,12 +7,36 @@ config.autoAddCss = false;
 
 export const metadata = {
   metadataBase: new URL(siteConfig.url),
+
   title: {
     default: 'ร้านอาหารสยาม เช็กคิวและเทียบความคุ้ม | กินไหนดี',
     template: '%s | กินไหนดี',
   },
+
   description: siteConfig.description,
-  applicationName: siteConfig.name,
+
+  applicationName: 'กินไหนดี',
+  authors: [{ name: 'กินไหนดี' }],
+  creator: 'กินไหนดี',
+  publisher: 'กินไหนดี',
+
+  // ⭐ เพิ่มตรงนี้
+  icons: {
+    icon: [
+      {
+        url: '/favicon.ico',
+        sizes: 'any',
+      },
+      {
+        url: '/icon.png',
+        type: 'image/png',
+        sizes: '512x512',
+      },
+    ],
+    shortcut: '/favicon.ico',
+    apple: '/apple-touch-icon.png',
+  },
+
   keywords: [
     'ร้านอาหารสยาม',
     'ร้านอาหาร Siam Square',
@@ -21,26 +45,29 @@ export const metadata = {
     'เช็กคิวร้านอาหาร',
     'ร้านอาหาร Siam Center',
   ],
-  authors: [{ name: siteConfig.name }],
-  creator: siteConfig.name,
-  publisher: siteConfig.name,
+
   alternates: {
     canonical: '/',
-    languages: { 'th-TH': '/' },
+    languages: {
+      'th-TH': '/',
+    },
   },
+
   openGraph: {
     type: 'website',
     locale: 'th_TH',
     url: '/',
-    siteName: siteConfig.name,
-    title: 'ร้านอาหารสยาม เช็กคิวและเทียบความคุ้ม',
+    siteName: 'กินไหนดี',
+    title: 'ร้านอาหารสยาม เช็กคิวและเทียบความคุ้ม | กินไหนดี',
     description: siteConfig.description,
   },
+
   twitter: {
     card: 'summary_large_image',
-    title: 'ร้านอาหารสยาม เช็กคิวและเทียบความคุ้ม',
+    title: 'ร้านอาหารสยาม เช็กคิวและเทียบความคุ้ม | กินไหนดี',
     description: siteConfig.description,
   },
+
   robots: {
     index: true,
     follow: true,
@@ -52,6 +79,7 @@ export const metadata = {
       'max-video-preview': -1,
     },
   },
+
   category: 'food',
 };
 
@@ -66,8 +94,11 @@ export default function RootLayout({ children }) {
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
-    name: siteConfig.name,
-    alternateName: 'กินไหนดี Siam',
+
+    // ⭐ แนะนำกำหนดตรง ๆ
+    name: 'กินไหนดี',
+    alternateName: ['กินไหนดี SIAM', 'กินไหนดี Siam'],
+
     url: siteConfig.url,
     description: siteConfig.description,
     inLanguage: 'th-TH',
@@ -78,7 +109,9 @@ export default function RootLayout({ children }) {
       <body>
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c') }}
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c'),
+          }}
         />
         {children}
       </body>
