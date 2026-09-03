@@ -1,0 +1,86 @@
+@import url('https://fonts.googleapis.com/css2?family=Bai+Jamjuree:wght@400;500;600;700&display=swap');
+@import 'tailwindcss';
+
+@theme {
+  --color-paper: #f7f3eb;
+  --color-surface: #fffdf8;
+  --color-ink: #171714;
+  --color-muted: #6d6a62;
+  --color-line: #ded8cb;
+  --color-chilli: #d8442f;
+  --color-chilli-dark: #a82b1d;
+  --color-leaf: #23745a;
+  --color-leaf-soft: #dcebe3;
+  --color-amber-soft: #f3e7c9;
+  --font-sans: 'Bai Jamjuree', 'Noto Sans Thai', sans-serif;
+  --font-display: 'Bai Jamjuree', 'Noto Sans Thai', sans-serif;
+}
+
+@layer base {
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; background: #e9e4da; }
+  body {
+    margin: 0;
+    background: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 16px;
+    line-height: 1.45;
+    -webkit-font-smoothing: antialiased;
+  }
+  button, input { font: inherit; }
+  button { color: inherit; }
+  button:focus-visible, input:focus-visible, [tabindex]:focus-visible {
+    outline: 3px solid rgb(216 68 47 / .28);
+    outline-offset: 3px;
+  }
+  ::selection { background: #f0b9ae; color: #56160d; }
+}
+
+@keyframes member-backdrop-in {
+  from { opacity: 0; }
+}
+
+@keyframes member-modal-in {
+  from {
+    opacity: 0;
+    transform: translateY(28px) scale(.97);
+    clip-path: inset(12% 5% 0 5% round 16px);
+  }
+}
+
+@keyframes member-card-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+}
+
+@keyframes member-detail-in {
+  from {
+    opacity: 0;
+    transform: translateY(22px) scale(.975);
+    clip-path: inset(8% 4% 0 4% round 16px);
+  }
+}
+
+@keyframes line-welcome-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -18px) scale(.96);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [class*="member-modal-in"],
+  [class*="member-card-in"],
+  [class*="member-detail-in"],
+  [class*="member-backdrop-in"] {
+    animation-duration: .01ms !important;
+    animation-delay: 0ms !important;
+  }
+
+  [class*="line-welcome-in"] {
+    animation-duration: .01ms !important;
+  }
+}
