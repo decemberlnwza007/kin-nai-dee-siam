@@ -1,11 +1,11 @@
-import { siteConfig } from './site';
+import { siteConfig } from "./site";
 
 export default function sitemap() {
   return [
     {
       url: siteConfig.url,
-      lastModified: new Date('2026-08-24'),
-      changeFrequency: 'weekly',
+      lastModified: new Date("2026-08-24"),
+      changeFrequency: "weekly",
       priority: 1,
       images: [
         `${siteConfig.url}/assets/baan-ying-siam-center.jpg`,

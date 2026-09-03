@@ -1,70 +1,58 @@
-import '../output.css';
-import { siteConfig } from './site';
+import "../output.css";
+import { siteConfig } from "./site";
 
-import { config } from '@fortawesome/fontawesome-svg-core';
-import '@fortawesome/fontawesome-svg-core/styles.css';
+import { config } from "@fortawesome/fontawesome-svg-core";
+import "@fortawesome/fontawesome-svg-core/styles.css";
 config.autoAddCss = false;
 
 export const metadata = {
   metadataBase: new URL(siteConfig.url),
 
   title: {
-    default: 'ร้านอาหารสยาม เช็กคิวและเทียบความคุ้ม | กินไหนดี',
-    template: '%s | กินไหนดี',
+    default: "ร้านอาหารสยาม เช็กคิวและเทียบความคุ้ม | กินไหนดี",
+    template: "%s | กินไหนดี",
   },
 
   description: siteConfig.description,
 
-  applicationName: 'กินไหนดี',
-  authors: [{ name: 'กินไหนดี' }],
-  creator: 'กินไหนดี',
-  publisher: 'กินไหนดี',
+  applicationName: "กินไหนดี",
+  authors: [{ name: "กินไหนดี" }],
+  creator: "กินไหนดี",
+  publisher: "กินไหนดี",
 
-  // ⭐ เพิ่มตรงนี้
   icons: {
-    icon: [
-      {
-        url: '/favicon.ico',
-        sizes: 'any',
-      },
-      {
-        url: '/icon.png',
-        type: 'image/png',
-        sizes: '512x512',
-      },
-    ],
-    shortcut: '/favicon.ico',
-    apple: '/apple-touch-icon.png',
+    icon: "/favicon.ico",
+    shortcut: "/favicon.ico",
   },
 
   keywords: [
-    'ร้านอาหารสยาม',
-    'ร้านอาหาร Siam Square',
-    'ร้านอาหารสยามสแควร์',
-    'ร้านอาหารใกล้ฉัน',
-    'เช็กคิวร้านอาหาร',
-    'ร้านอาหาร Siam Center',
+    "ร้านอาหารสยาม",
+    "ร้านอาหาร Siam Square",
+    "ร้านอาหารสยามสแควร์",
+    "ร้านอาหารใกล้ฉัน",
+    "เช็กคิวร้านอาหาร",
+    "ร้านอาหาร Siam Center",
   ],
 
   alternates: {
-    canonical: '/',
+    canonical: "/",
     languages: {
-      'th-TH': '/',
+      "th-TH": "/",
     },
   },
 
   openGraph: {
-    type: 'website',
-    locale: 'th_TH',
-    url: '/',
-    siteName: 'กินไหนดี',
-    title: 'ร้านอาหารสยาม เช็กคิวและเทียบความคุ้ม | กินไหนดี',
+    type: "website",
+    locale: "th_TH",
+    url: "/",
+    siteName: "กินไหนดี",
+    title: "ร้านอาหารสยาม เช็กคิวและเทียบความคุ้ม | กินไหนดี",
     description: siteConfig.description,
   },
 
   twitter: {
-    card: 'summary_large_image',
-    title: 'ร้านอาหารสยาม เช็กคิวและเทียบความคุ้ม | กินไหนดี',
+    card: "summary_large_image",
+    title: "ร้านอาหารสยาม เช็กคิวและเทียบความคุ้ม | กินไหนดี",
     description: siteConfig.description,
   },
 
@@ -74,13 +62,13 @@ export const metadata = {
     googleBot: {
       index: true,
       follow: true,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
-      'max-video-preview': -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
     },
   },
 
-  category: 'food',
+  category: "food",
 };
 
 export const viewport = {
@@ -92,16 +80,14 @@ export const viewport = {
 
 export default function RootLayout({ children }) {
   const jsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'WebSite',
-
-    // ⭐ แนะนำกำหนดตรง ๆ
-    name: 'กินไหนดี',
-    alternateName: ['กินไหนดี SIAM', 'กินไหนดี Siam'],
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: "กินไหนดี",
+    alternateName: ["กินไหนดี SIAM", "กินไหนดี Siam"],
 
     url: siteConfig.url,
     description: siteConfig.description,
-    inLanguage: 'th-TH',
+    inLanguage: "th-TH",
   };
 
   return (

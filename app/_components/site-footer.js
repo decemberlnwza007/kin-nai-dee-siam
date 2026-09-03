@@ -3,6 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 
+import { TEAM_MEMBERS } from "../_data/team";
+
 export default function Footer({ onNavigate, hasQueue }) {
   const [showMembers, setShowMembers] = useState(false);
   const [selectedMember, setSelectedMember] = useState(null);
@@ -18,45 +20,6 @@ export default function Footer({ onNavigate, hasQueue }) {
     { id: "home", label: "ค้นหาร้าน" },
     { id: "compare", label: "เปรียบเทียบ" },
     { id: "queue", label: hasQueue ? "ดูคิวของฉัน" : "ทดลองเข้าคิว" },
-  ];
-
-  const members = [
-    {
-      name: "Mr.Natthawat",
-      lastname: "Rodchanathanatham",
-      studentId: "69130500020",
-      photo: "/assets/tam.JPG",
-    },
-    {
-      name: "Mr.Phattharaphon",
-      lastname: "Chomput",
-      studentId: "69130500044",
-      photo: "/assets/noon.jpg",
-    },
-    {
-      name: "Wannakorn ",
-      lastname: "Chongsanguan",
-      studentId: "69130500053",
-      photo: "/assets/nammon.jpg",
-    },
-    {
-      name: "Mr.Phongsakorn",
-      lastname: "Thongrak",
-      studentId: "69130500037",
-      photo: "/assets/thanwa.JPG",
-    },
-    {
-      name: "Ratthakit",
-      lastname: "Wiangsanthia",
-      studentId: "69130500048",
-      photo: "/assets/sense.jpg",
-    },
-    {
-      name: "Mr.Phakhapon",
-      lastname: "Waeowab",
-      studentId: "69130500041",
-      photo: "/assets/it.jpg",
-    },
   ];
 
   useEffect(() => {
@@ -249,7 +212,7 @@ export default function Footer({ onNavigate, hasQueue }) {
 
             <div className="px-6 py-5 min-[600px]:px-8 min-[600px]:py-7">
               <div className="grid gap-3 min-[600px]:grid-cols-2">
-                {members.map((member, index) => (
+                {TEAM_MEMBERS.map((member, index) => (
                   <button
                     key={`${member.name}-${index}`}
                     ref={(node) => {
